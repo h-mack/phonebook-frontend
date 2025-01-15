@@ -12,7 +12,6 @@ export default function App() {
   const [newNumber, setNewNumber] = useState("");
   const [filterInput, setFilterInput] = useState("");
 
-  // TODO: replace fetchData() with useGetAxios hook
   useEffect(() => {
     getAll();
   }, [persons]);
