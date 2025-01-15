@@ -27,7 +27,7 @@ export default function App() {
       }
     };
     fetchData();
-  }, []);
+  }, [persons]);
 
   const debouncedValue = useDebounce(filterInput, 350);
   const debouncedValueLowerCase = debouncedValue.toLowerCase();

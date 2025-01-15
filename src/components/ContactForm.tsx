@@ -1,5 +1,6 @@
-import { FormEventHandler, useId } from "react";
+import { FormEventHandler, useId, useState } from "react";
 import { Person } from "../types/Types";
+import axios from "axios";
 
 type ContactFormProps = {
   persons: Person[];
@@ -23,8 +24,31 @@ export function ContactForm({
   const numberId = useId();
   const numberHintId = useId();
 
+  const [error, setError] = useState<unknown>("");
+  const [loading, setLoading] = useState(false);
+
+  const postData = async () => {
+    setLoading(true);
+    try {
+      const response = await axios.post("http://localhost:3001/persons", {
+        name: newName,
+        number: newNumber,
+      });
+      console.log(response);
+    } catch (error) {
+      setError(error);
+      console.error(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const handleSubmit: FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
+    if (!newName || !newNumber) {
+      alert("Please ensure both fields are not empty.");
+      return;
+    }
     if (persons.some((e) => e.name === newName)) {
       alert(`${newName} is already added to phonebook`);
       setNewName("");
@@ -37,14 +61,7 @@ export function ContactForm({
       setNewNumber("");
       return;
     }
-    setPersons([
-      ...persons,
-      {
-        name: newName,
-        number: newNumber,
-        id: persons[persons.length - 1].id++,
-      },
-    ]);
+    postData();
     setNewName("");
     setNewNumber("");
   };
@@ -84,7 +101,9 @@ export function ContactForm({
         />
       </div>
       <div>
-        <button type="submit">add</button>
+        <button type="submit" disabled={loading}>
+          add
+        </button>
       </div>
     </form>
   );
