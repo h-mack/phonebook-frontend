@@ -16,7 +16,7 @@ export default function App() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get("http://localhost:3001/persons");
+        const response = await axios.get("http://localhost:3000/persons");
         setPersons(response.data);
       } catch (err) {
         if (axios.isAxiosError(err)) {

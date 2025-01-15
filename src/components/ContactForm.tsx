@@ -30,7 +30,7 @@ export function ContactForm({
   const postData = async () => {
     setLoading(true);
     try {
-      const response = await axios.post("http://localhost:3001/persons", {
+      const response = await axios.post("http://localhost:3000/persons", {
         name: newName,
         number: newNumber,
       });
