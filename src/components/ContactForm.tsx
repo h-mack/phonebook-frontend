@@ -24,7 +24,7 @@ export function ContactForm({
   const numberId = useId();
   const numberHintId = useId();
 
-  const [error, setError] = useState<unknown>("");
+  const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
 
   const postData = async () => {
@@ -105,6 +105,7 @@ export function ContactForm({
           add
         </button>
       </div>
+      {error && <p style={{ color: "red" }}>{error}</p>}
     </form>
   );
 }
