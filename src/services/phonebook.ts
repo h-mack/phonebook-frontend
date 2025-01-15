@@ -1,9 +1,13 @@
 import axios from "axios";
-const baseUrl = "http://localhost:3000/notes";
+const baseUrl = "http://localhost:3000/persons";
 
-const getAll = () => {
-  const request = axios.get(baseUrl);
-  return request.then((response) => response.data);
+export const getAll = async () => {
+  try {
+    const response = await axios.get(baseUrl);
+    return response.data;
+  } catch (err) {
+    console.error(err);
+  }
 };
 
 const create = (newObject) => {

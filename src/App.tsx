@@ -4,7 +4,7 @@ import { SearchFilter } from "./components/SearchFilter";
 import { ContactForm } from "./components/ContactForm";
 import { PersonsList } from "./components/PersonsList";
 import { Person } from "./types/Types";
-import axios from "axios";
+import { getAll } from "./services/phonebook";
 
 export default function App() {
   const [persons, setPersons] = useState<Person[]>([]);
@@ -14,19 +14,7 @@ export default function App() {
 
   // TODO: replace fetchData() with useGetAxios hook
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get("http://localhost:3000/persons");
-        setPersons(response.data);
-      } catch (err) {
-        if (axios.isAxiosError(err)) {
-          console.error(err.message);
-        } else {
-          console.error(err);
-        }
-      }
-    };
-    fetchData();
+    getAll();
   }, [persons]);
 
   const debouncedValue = useDebounce(filterInput, 350);
