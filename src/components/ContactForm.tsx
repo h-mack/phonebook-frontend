@@ -1,4 +1,4 @@
-import { FormEventHandler, useId, useState } from "react";
+import { FormEventHandler, useId, useState, useRef } from "react";
 import { Person } from "../types/Types";
 import phonebook from "../services/phonebook";
 
@@ -26,6 +26,8 @@ export function ContactForm({
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
 
+  const nameInputRef = useRef<HTMLInputElement>(null);
+
   const postData = async () => {
     setLoading(true);
     try {
@@ -41,23 +43,42 @@ export function ContactForm({
     }
   };
 
+  const updateNumber = async (id: number, details: Omit<Person, "id">) => {
+    setLoading(true);
+    try {
+      await phonebook.update(id, details);
+    } catch (err) {
+      setError("Failed request to update contact.");
+      console.error(err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const handleSubmit: FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
     if (!newName || !newNumber) {
       alert("Please ensure both fields are not empty.");
       return;
     }
-    if (persons.some((e) => e.name === newName)) {
-      alert(`${newName} is already added to phonebook`);
-      setNewName("");
-      setNewNumber("");
-      return;
-    }
-    if (persons.some((e) => e.number === newNumber)) {
-      alert(`${newNumber} is already added to phonebook`);
-      setNewName("");
-      setNewNumber("");
-      return;
+    if (persons.some((person) => person.name === newName)) {
+      const confirmation = window.confirm(
+        `${newName} is already added to the phonebook, replace the old number with a new one?`
+      );
+      if (!confirmation) {
+        setNewName("");
+        setNewNumber("");
+        nameInputRef.current?.focus();
+        return;
+      } else {
+        const id = persons.find((person) => person.name === newName)!.id;
+        const details = {
+          name: newName,
+          number: newNumber,
+        };
+        updateNumber(id, details);
+        return;
+      }
     }
     postData();
     setNewName("");
@@ -80,6 +101,7 @@ export function ContactForm({
           value={newName}
           onChange={(e) => setNewName(e.target.value)}
           placeholder="John Smith"
+          ref={nameInputRef}
         />
       </div>
       <div>

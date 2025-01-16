@@ -19,7 +19,7 @@ const create = async (newObject: Omit<Person, "id">) => {
   }
 };
 
-const update = async (id: Person["id"], newObject: Person) => {
+const update = async (id: Person["id"], newObject: Omit<Person, "id">) => {
   try {
     await axios.put(`${baseUrl}/${id}`, newObject);
   } catch (err) {
