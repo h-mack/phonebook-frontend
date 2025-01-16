@@ -1,10 +1,10 @@
 import { FormEventHandler, useId, useState } from "react";
 import { Person } from "../types/Types";
-import axios from "axios";
+import phonebook from "../services/phonebook";
 
 type ContactFormProps = {
   persons: Person[];
-  setPersons: (persons: Person[]) => void;
+  // setPersons: (persons: Person[]) => void;
   newName: string;
   setNewName: (name: string) => void;
   newNumber: string;
@@ -13,7 +13,6 @@ type ContactFormProps = {
 
 export function ContactForm({
   persons,
-  setPersons,
   newName,
   setNewName,
   newNumber,
@@ -30,13 +29,12 @@ export function ContactForm({
   const postData = async () => {
     setLoading(true);
     try {
-      const response = await axios.post("http://localhost:3000/persons", {
+      await phonebook.create({
         name: newName,
         number: newNumber,
       });
-      console.log(response);
     } catch (error) {
-      setError(error);
+      setError("Failed request to send data.");
       console.error(error);
     } finally {
       setLoading(false);
