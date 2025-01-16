@@ -6,11 +6,6 @@
       "id": "1"
     },
     {
-      "name": "Ada Lovelace",
-      "number": "39-44-5323523",
-      "id": "2"
-    },
-    {
       "name": "Dan Abramov",
       "number": "12-43-234345",
       "id": "3"
@@ -21,14 +16,9 @@
       "id": "4"
     },
     {
-      "id": "c79d",
-      "name": "John Smith",
-      "number": "555-555-555"
-    },
-    {
-      "id": "e222",
-      "name": "Sally Sue",
-      "number": "1231231231"
+      "id": "dde1",
+      "name": "Isaac Newton",
+      "number": "458722154"
     }
   ]
 }

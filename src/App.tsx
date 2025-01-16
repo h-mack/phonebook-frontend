@@ -26,12 +26,10 @@ export default function App() {
     };
 
     fetchData();
-  }, []);
+  }, [persons]);
 
   const debouncedValue = useDebounce(filterInput, 350);
   const debouncedValueLowerCase = debouncedValue.toLowerCase();
-
-  function deletePerson() {}
 
   return (
     <div>
@@ -52,11 +50,7 @@ export default function App() {
         setNewNumber={setNewNumber}
       />
       <h2>Numbers</h2>
-      <PersonsList
-        persons={persons}
-        filter={debouncedValueLowerCase}
-        onClick={deletePerson}
-      />
+      <PersonsList persons={persons} filter={debouncedValueLowerCase} />
     </div>
   );
 }
