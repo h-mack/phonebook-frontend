@@ -27,4 +27,12 @@ const update = async (id: Person["id"], newObject: Person) => {
   }
 };
 
-export default { getAll, create, update };
+const remove = async (id: Person["id"]) => {
+  try {
+    await axios.delete(`${baseUrl}/${id}`);
+  } catch (err) {
+    console.error(err);
+  }
+};
+
+export default { getAll, create, update, remove };
