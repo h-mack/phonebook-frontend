@@ -9,6 +9,7 @@ type ContactFormProps = {
   setNewName: (name: string) => void;
   newNumber: string;
   setNewNumber: (number: string) => void;
+  setAlert: (alert: string | null) => void;
 };
 
 export function ContactForm({
@@ -17,6 +18,7 @@ export function ContactForm({
   setNewName,
   newNumber,
   setNewNumber,
+  setAlert,
 }: ContactFormProps) {
   const nameId = useId();
   const nameHintId = useId();
@@ -35,6 +37,10 @@ export function ContactForm({
         name: newName,
         number: newNumber,
       });
+      setAlert(`Added ${newName}`);
+      setTimeout(() => {
+        setAlert(null);
+      }, 3000);
     } catch (error) {
       setError("Failed request to send data.");
       console.error(error);
@@ -77,6 +83,10 @@ export function ContactForm({
           number: newNumber,
         };
         updateNumber(id, details);
+        setAlert(`Updated number for ${newName}`);
+        setTimeout(() => {
+          setAlert(null);
+        }, 3000);
         return;
       }
     }
