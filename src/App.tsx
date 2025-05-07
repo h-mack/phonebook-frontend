@@ -36,7 +36,7 @@ export default function App() {
     return () => {
       ignore = true;
     };
-  }, [persons]);
+  }, []);
 
   const debouncedValue = useDebounce(filterInput, 350);
   const debouncedValueLowerCase = debouncedValue.toLowerCase();
